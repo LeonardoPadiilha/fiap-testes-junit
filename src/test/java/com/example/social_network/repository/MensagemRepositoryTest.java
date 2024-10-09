@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -78,7 +79,23 @@ public class MensagemRepositoryTest {
         verify(mensagemRepository, times(1)).deleteById(any(UUID.class));
     }
 
+    @Test
+    void devePermitirListarMensagens(){
+        //arrange
+        var mensagem1 = gerarMensagem();
+        var mensagem2 = gerarMensagem();
+        var listMensagens = Arrays.asList(mensagem1, mensagem2);
+        //quando o mensagemRepository fizer um findAll, deve retornar a lista de mensagens
+        when(mensagemRepository.findAll()).thenReturn(listMensagens);
+
+        //act
+        var mensagensRecebidas = mensagemRepository.findAll();
+        //assert
+        assertThat(mensagensRecebidas).hasSize(2).containsExactlyInAnyOrder(mensagem1, mensagem2);
+        verify(mensagemRepository, times(1)).findAll();
+    }
+
     private Mensagem gerarMensagem(){
-        return Mensagem.builder().usuario("Jose").conteudo("Algouma coisa").build();
+        return Mensagem.builder().usuario("Jose").conteudo("Alguma coisa").build();
     }
 }

@@ -29,7 +29,7 @@ public class Mensagem {
     @NotEmpty(message = "conteudo nao pode ser vazio")
     private String conteudo;
 
-    private LocalDateTime dataCriacaoMensagem;
+    private LocalDateTime dataCriacao;
 
     private int gostei;
 
@@ -37,7 +37,7 @@ public class Mensagem {
         this.id = id != null ? id : UUID.randomUUID();
         this.usuario = usuario;
         this.conteudo = conteudo;
-        this.dataCriacaoMensagem = LocalDateTime.now();
+        this.dataCriacao = LocalDateTime.now();
         this.gostei = 0;
     }
 }
