@@ -1,5 +1,6 @@
 package com.example.social_network.service.impl;
 
+import com.example.social_network.exception.MensagemNotFoundException;
 import com.example.social_network.model.Mensagem;
 import com.example.social_network.repository.MensagemRepository;
 import com.example.social_network.service.MensagemService;
@@ -22,12 +23,17 @@ public class MensagemServiceImpl  implements MensagemService {
 
     @Override
     public Mensagem buscarMensagem(UUID id) {
-        return null;
+        return mensagemRepository.findById(id).orElseThrow(() -> new MensagemNotFoundException("Mensagem não encontrada"));
     }
 
     @Override
-    public Mensagem alterarMensagem(Mensagem mensagemAtual, Mensagem mensagemNova) {
-        return null;
+    public Mensagem alterarMensagem(UUID id, Mensagem mensagemAtualizada) {
+        var mensagem = buscarMensagem(id);
+        if(!mensagem.getId().equals(mensagemAtualizada.getId())){
+            throw new MensagemNotFoundException("Mensagem atualizada nao apresenta o ID correto");
+        }
+        mensagem.setConteudo(mensagemAtualizada.getConteudo());
+        return mensagemRepository.save(mensagem);
     }
 
     @Override

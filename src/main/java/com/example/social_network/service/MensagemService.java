@@ -10,7 +10,7 @@ public interface MensagemService {
 
     Mensagem buscarMensagem(UUID id);
 
-    Mensagem alterarMensagem(Mensagem mensagemAtual, Mensagem mensagemNova);
+    Mensagem alterarMensagem(UUID id, Mensagem mensagemNova);
 
     boolean removerMensagem(UUID id);
 }
