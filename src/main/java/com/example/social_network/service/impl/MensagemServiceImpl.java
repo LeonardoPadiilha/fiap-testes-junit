@@ -5,6 +5,8 @@ import com.example.social_network.model.Mensagem;
 import com.example.social_network.repository.MensagemRepository;
 import com.example.social_network.service.MensagemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -38,6 +40,15 @@ public class MensagemServiceImpl  implements MensagemService {
 
     @Override
     public boolean removerMensagem(UUID id) {
-        return false;
+        buscarMensagem(id);
+        mensagemRepository.deleteById(id);
+        return true;
     }
+
+    @Override
+    public Page<Mensagem> listarMensagens(Pageable pageable) {
+        return mensagemRepository.listarMensagens(pageable);
+    }
+
+
 }
